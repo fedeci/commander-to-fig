@@ -7,8 +7,8 @@ const fixturesPath = path.resolve("test/fixtures/");
 
 function report(fixture: string, successful: boolean) {
   successful
-    ? console.log(chalk.bgGreen(`Successfully run ${chalk.underline(fixture)}`))
-    : console.log(chalk.bgRed(`Failed running ${chalk.underline(fixture)}`));
+    ? console.log(chalk.bgGreen(` ✓ Successfully run ${chalk.underline(fixture)} `))
+    : console.log(chalk.bgRed(` × Failed running ${chalk.underline(fixture)} `));
 }
 
 function runFixtures() {
@@ -24,8 +24,9 @@ function runFixtures() {
     const cmd = `node -r ts-node/register ${command}`;
     child.execSync(cmd);
 
-    if (!fs.existsSync(expected)) {
+    if (!fs.existsSync(expected) || process.env.OVERWRITE) {
       fs.copyFileSync(output, expected);
+      console.log(chalk.bgYellow(` - ${process.env.OVERWRITE ? 'Regenerated' : 'Generated'} ${chalk.underline(fixture.name)} `))
       continue;
     }
 
