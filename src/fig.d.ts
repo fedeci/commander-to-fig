@@ -1,40 +1,31 @@
 // TODO: Temporary solution, export types from `@withfig/autocomplete` package
 
 // All the available templates
-export type TemplateStrings = "filepaths" | "folders";
+export type TemplateStrings = 'filepaths' | 'folders'
 
-export type Template = TemplateStrings | TemplateStrings[];
+export type Template = TemplateStrings | TemplateStrings[]
 
 // The type of suggestion to use
-export type SuggestionType =
-  | "folder"
-  | "file"
-  | "arg"
-  | "subcommand"
-  | "option"
-  | "special"
-  | "shortcut";
+export type SuggestionType = 'folder' | 'file' | 'arg' | 'subcommand' | 'option' | 'special' | 'shortcut'
 
 // A single T object or an array of this T object
-export type SingleOrArray<T> = T | T[];
+export type SingleOrArray<T> = T | T[]
 
 // A function which can have a T argument and a R result, both
 // set to void by default
-export type Function<T = void, R = void> = (param?: T) => R;
+export type Function<T = void, R = void> = (param?: T) => R
 
 // A utility type to modify a property type
-export type Modify<T, R> = Omit<T, keyof R> & R;
+export type Modify<T, R> = Omit<T, keyof R> & R
 
 // A string or a function which can have a T argument and a R result,
 // both set to void by default
-export type StringOrFunction<T = void, R = void> = string | Function<T, R>;
+export type StringOrFunction<T = void, R = void> = string | Function<T, R>
 
-export type Spec = Subcommand;
+export type Spec = Subcommand
 
 // Execute shell command function inside generators
-export type ExecuteShellCommandFunction = (
-  commandToExecute: string
-) => Promise<string>;
+export type ExecuteShellCommandFunction = (commandToExecute: string) => Promise<string>
 
 export interface BaseSuggestion {
   /**
@@ -45,7 +36,7 @@ export interface BaseSuggestion {
    * to display some custom text like `Install an NPM package 📦` we would set
    * `name: "install"` and `displayName: "Install an NPM package 📦"`
    */
-  displayName?: string;
+  displayName?: string
   /**
    * The value that's inserted into the terminal when a user presses enter/tab or clicks on a menu item. You can use `\n` to insert a newline or `\b` to insert a backspace.
    * You can also optionally specify {cursor} in the string and Fig will automatically place the cursor there after insert.
@@ -54,11 +45,11 @@ export interface BaseSuggestion {
    * @example
    * For the `git commit` subcommand, the `-m` option has an insert value of `-m '{cursor}'`
    */
-  insertValue?: string;
+  insertValue?: string
   /**
    * The text that gets rendered at the bottom of the autocomplete box (or the side if you hit ⌘i)
    */
-  description?: string;
+  description?: string
   /**
    * The icon that is rendered is based on the type. Icons
    * can be a 1 character string, a URL, or Fig's [icon protocol](https://fig.io/docs/reference/suggestion/icon-api) (fig://) which lets you generate
@@ -69,7 +60,7 @@ export interface BaseSuggestion {
    * `https://www.herokucdn.com/favicon.ico`
    * `fig://icon?type=file`
    */
-  icon?: string;
+  icon?: string
   /**
    * Specifies whether the suggestion is "dangerous". If true, Fig will not enable
    * its "insert and run" functionality (when Fig has the red insert icon).
@@ -78,7 +69,7 @@ export interface BaseSuggestion {
    * @example
    * This is used in the `rm` spec.
    */
-  isDangerous?: boolean;
+  isDangerous?: boolean
 
   /**
    * The priority between 0-100 for a given suggestion determines its ranking in the Fig popup. A higher ranked priority will be listed first. The default priority is 50.
@@ -92,14 +83,14 @@ export interface BaseSuggestion {
    *
    * If you want your suggestions to always be at the bottom regardless of whether they have been selected before or not, rank them 49 or below
    */
-  priority?: number;
+  priority?: number
   /**
    * Specifies whether a suggestion should be hidden from results. Fig will only show it if the user types the exact name.
    *
    * @example
    * The "-" suggestion is hidden in the `cd` spec. You will only see it if you type `cd -`
    */
-  hidden?: boolean;
+  hidden?: boolean
 }
 
 export interface Suggestion extends BaseSuggestion {
@@ -108,12 +99,12 @@ export interface Suggestion extends BaseSuggestion {
    *  The `name` props of suggestion, subcommand, options, and args objects are all different. It's important to read them all carefully.
    *
    */
-  name?: SingleOrArray<string>;
+  name?: SingleOrArray<string>
   /**
    * The type of suggestion, one of `folder`, `file`, `arg`, `subcommand`, `option`,
    * `special`.
    */
-  type?: SuggestionType;
+  type?: SuggestionType
 }
 
 export interface Subcommand extends BaseSuggestion {
@@ -123,18 +114,18 @@ export interface Subcommand extends BaseSuggestion {
    * @example
    * For `npm install`, the subcommand `install` would have "name: install"
    */
-  name: SingleOrArray<string>;
+  name: SingleOrArray<string>
 
   /**
    * A list of subcommands for this spec.
    * Subcommands can be nested recursively.
    */
-  subcommands?: Subcommand[];
+  subcommands?: Subcommand[]
 
   /**
    * A list of [option objects](./option) for this subcommand.
    */
-  options?: Option[];
+  options?: Option[]
 
   /**
    * An array of args or a single arg.
@@ -147,7 +138,7 @@ export interface Subcommand extends BaseSuggestion {
    * `args: [{}, {}]`
    */
 
-  args?: SingleOrArray<Arg>;
+  args?: SingleOrArray<Arg>
 
   /**
    * A list of Suggestion objects that are appended to a specific subcommand. These are often shortcuts.
@@ -155,7 +146,7 @@ export interface Subcommand extends BaseSuggestion {
    * @example:
    * `commit -m '{cursor}'` is a shortcut for git
    */
-  additionalSuggestions?: Suggestion[] | string[];
+  additionalSuggestions?: Suggestion[] | string[]
   /**
    * Allows Fig to load another completion spec in the `~/.fig/autocomplete` folder.
    * Specify the spec name without `js`.
@@ -170,7 +161,7 @@ export interface Subcommand extends BaseSuggestion {
    * (e.g. python, node) and you would like Fig to continue to provide completions for this
    * script, see `isCommand` and `isScript` in @link https://fig.io/docs/reference/arg | Arg}.
    */
-  loadSpec?: string;
+  loadSpec?: string
   /**
    * Dynamically generate a completion spec to be merged in at the same level as the current subcommand. This is useful when a CLI is generated dynamically.
    * This function takes two params:
@@ -182,10 +173,7 @@ export interface Subcommand extends BaseSuggestion {
    * @example
    * The python spec uses generateSpec to insert the django-admin spec if django manage.py exists.
    */
-  generateSpec?: (
-    tokens?: string[],
-    executeShellCommand?: ExecuteShellCommandFunction
-  ) => Promise<Spec>;
+  generateSpec?: (tokens?: string[], executeShellCommand?: ExecuteShellCommandFunction) => Promise<Spec>
 
   /**
    * These flags allow customization of how Fig parses tokens from the
@@ -199,8 +187,8 @@ export interface Subcommand extends BaseSuggestion {
    * `-work` from the go spec is parsed as a single flag when `parserDirectives.flagsArePosixNoncompliant` is set to true. Normally, this would be chained and parsed as `-w -o -r -k` if `flagsArePosixNoncompliant` is not set to true.
    */
   parserDirectives?: {
-    flagsArePosixNoncompliant?: boolean;
-  };
+    flagsArePosixNoncompliant?: boolean
+  }
 }
 
 export interface Option extends BaseSuggestion {
@@ -210,7 +198,7 @@ export interface Option extends BaseSuggestion {
    * @example
    * For git commit -m, the option name is `["-m", "--message"]`
    */
-  name: SingleOrArray<string>;
+  name: SingleOrArray<string>
 
   /**
    * An array of args or a single arg object.
@@ -221,7 +209,7 @@ export interface Option extends BaseSuggestion {
    * `git commit -m` takes one argument. The most basic representation of this is
    * `args: {}`
    */
-  args?: SingleOrArray<Arg>;
+  args?: SingleOrArray<Arg>
   /**
    *
    * Signals whether an option is required. The default value is false, meaning an option is NOT required.
@@ -232,7 +220,7 @@ export interface Option extends BaseSuggestion {
    * The `-m` option of git commit is required
    *
    */
-  isRequired?: boolean;
+  isRequired?: boolean
   /**
    *
    * Signals whether an option can be passed multiple times. The default is an
@@ -267,7 +255,7 @@ export interface Option extends BaseSuggestion {
    * and will treat this as an argument to `ssh`.
    *
    */
-  isRepeatable?: boolean | number;
+  isRepeatable?: boolean | number
   /**
    *
    * Signals whether an option is mutually exclusive with other options. This is defined as an array of strings of the option names.
@@ -279,7 +267,7 @@ export interface Option extends BaseSuggestion {
    * If we were defining the exclusive prop of the "-a" option, then we would have `exclusive: ["--interactive", "--patch"]`
    *
    */
-  exclusiveOn?: string[];
+  exclusiveOn?: string[]
   /**
    *
    * Signals whether an option depends other options. This is defined as an array of strings of the option names.
@@ -292,7 +280,7 @@ export interface Option extends BaseSuggestion {
    *
    *
    */
-  dependsOn?: string[];
+  dependsOn?: string[]
 }
 
 export interface Arg {
@@ -304,13 +292,13 @@ export interface Arg {
    * @example
    * The name prop for the `git commit -m` arg object is "message". You can see this when you type!
    */
-  name?: string;
+  name?: string
 
   /**
    * The text that gets rendered at the bottom of the autocomplete box a) when the user is inputting an argument and there are no suggestions and b) for all generated suggestions for an argument
    * Keep it short and direct!
    */
-  description?: string;
+  description?: string
 
   /**
    * Specifies whether the suggestion is "dangerous". If true, Fig will not enable
@@ -320,7 +308,7 @@ export interface Arg {
    * @example
    * This is used in the `rm` spec.
    */
-  isDangerous?: boolean;
+  isDangerous?: boolean
 
   /**
    * An array of strings or [Suggestion objects](./suggestion). This is used to specify custom suggestions
@@ -328,7 +316,7 @@ export interface Arg {
    * If suggestions are dependent upon the user's input or tokens, you most likely will
    * want to use a [Generator object](./generator) instead.
    */
-  suggestions?: string[] | Suggestion[];
+  suggestions?: string[] | Suggestion[]
   /**
    * Fig has pre-built generators for common suggestion types. Currently, we support
    * templates for either "filepaths" or "folders". You can do either of these as a string or both in an array.
@@ -337,21 +325,21 @@ export interface Arg {
    * @example
    * `cd` uses the `folders` template whereas ls uses `[filepaths, folders]`
    */
-  template?: Template;
+  template?: Template
   /**
    *
    * Generators let you run shell commands on the user's device to generate suggestions for arguments.
    * The generators prop takes a single generator object or a list of generator objects.
    * The generator object outputs an array of suggestions which are offered to users when inserting an argument.
    */
-  generators?: SingleOrArray<Generator>;
+  generators?: SingleOrArray<Generator>
   /**
    * Specifies that the argument is variadic and therefore repeats infinitely.
    *
    * @example
    * `echo` takes a variadic argument (`echo hello world ...`) and so does `git add`
    */
-  isVariadic?: boolean;
+  isVariadic?: boolean
 
   /**
    * True if an argument is optional. It is important you include this for our parsing. If you don't, Fig will assume the argument is mandatory and will not offer suggestions for a user.
@@ -359,21 +347,21 @@ export interface Arg {
    * @example
    * Git push [remote] [branch] takes two optional args
    */
-  isOptional?: boolean;
+  isOptional?: boolean
   /**
    * Specifies that the argument is an entirely new command which Fig should start completing on from scratch.
    *
    * @example
    * `time` and `builtin` have only one argument and this argument has the `isCommand` property. If I type `time git`, Fig will load up the git completion spec because the isCommand property is set.
    */
-  isCommand?: boolean;
+  isCommand?: boolean
   /**
    * The same as the `isCommand` prop, except you specify a string to prepend to what the user inputs and fig will load the completion spec accordingly. if isModule: "python/", Fig would load up the python/USER_INPUT.js completion spec from the `~/.fig/autocomplete` folder.
    *
    * @example
    * For `python -m`, the user can input a specific module such as http.server. Each module is effectively a mini CLI tool that should have its own completions. Therefore the argument object for -m has `isModule: "python/"`. Whatever the modules user inputs, Fig will look under the `~/.fig/autocomplete/python/` directory for completion spec.
    */
-  isModule?: string;
+  isModule?: string
   /**
    * The same as the `isCommand` prop, except Fig will look for a completion spec in a .fig folder in the user's current working directory.
    *
@@ -381,7 +369,7 @@ export interface Arg {
    * `python` take one argument which is a `.py` file. If I have a `main.py` file on my desktop and my current working directory is my desktop, if I type `python main.py` Fig will look for a completion spec in `~/Desktop/.fig/main.py.js`
    * See our docs for more on this @link https://fig.io/docs/tutorials/building-internal-clis | Fig for Teams}
    */
-  isScript?: boolean;
+  isScript?: boolean
 
   /**
    * This will debounce every keystroke event for this particular arg. If there are no keystroke events after 100ms, Fig will execute all the generators in this arg and return the suggestions.
@@ -389,12 +377,12 @@ export interface Arg {
    * @example
    * `npm install` and `pip install` send debounced network requests after inactive typing from users.
    */
-  debounce?: boolean;
+  debounce?: boolean
   /**
    * The default value for an optional argument.
    *
    */
-  default?: string;
+  default?: string
 }
 
 /**
@@ -409,16 +397,13 @@ export interface Generator {
    * @example
    * `cd` uses the `folders` template whereas ls uses `[filepaths, folders]`
    */
-  template?: Template;
+  template?: Template
   /**
    * This function takes a single argument: the array of suggestion objects output by the template prop. It then lets you edit them as you see fit. You must then return an array of suggestion objects.
    * @example
    * The python spec has an arg object which has a template for "filepaths" and then filters out all suggestions generated that don't end with "/" (to keep folders) or ".py" (to keep python files)
    */
-  filterTemplateSuggestions?: Function<
-    Modify<Suggestion, { name?: string }>[],
-    Suggestion[]
-  >;
+  filterTemplateSuggestions?: Function<Modify<Suggestion, { name?: string }>[], Suggestion[]>
   /**
    * In order to generate contextual suggestions for arguments, Fig lets you execute a shell command on the users local device as if it were done in their current working directory.
    * You can either specify
@@ -429,18 +414,18 @@ export interface Generator {
    * @example
    * `git checkout` takes one argument which is a git branch. Its arg object has a generator with a script of `git branch` to list out the branches.
    */
-  script?: StringOrFunction<string[], string>;
+  script?: StringOrFunction<string[], string>
   /**
    * This function takes one parameter: the output of `script`. You can do whatever processing you want, but you must return an array of Suggestion objects.
    */
-  postProcess?: (out: string, tokens?: string[]) => Suggestion[];
+  postProcess?: (out: string, tokens?: string[]) => Suggestion[]
   /**
    * Syntactic sugar for postProcess. This takes in the text output of `script`, splits it on the string you provide here, and then automatically generates an array of suggestion objects for each item.
    *
    * @example
    * Specify "," or "\n", and Fig will do the work of the `postProcess` prop for you
    */
-  splitOn?: string;
+  splitOn?: string
   /**
    * Fig performs numerous optimizations to avoid running expensive shell functions many times. For instance, after you type `cd[space]` we load up a list of folders (the suggestions). After you start typing, we instead filter over this list of folders (the filteredSuggestions).
    * The suggestions remain the same while the filteredSuggestions change on each input.
@@ -464,7 +449,7 @@ export interface Generator {
    * e.g. If I had already typed "desktop". The current list of suggestions is from the ~ directory and getQueryTerm is "desktop". Then I type "/" so it says "desktop/", the trigger would return true, Fig will generate suggestions for the directory `~/desktop/` and the query term will become an empty string.
    *
    */
-  trigger?: string | ((newToken: string, oldToken?: string) => boolean);
+  trigger?: string | ((newToken: string, oldToken?: string) => boolean)
   /**
    * Read the note above on how triggers work. Triggers and query term may seem similar but are actually different. The trigger defines when to regenerate new suggestions. The query term defines what characters we should use to filter over these suggestions.
    *
@@ -477,7 +462,7 @@ export interface Generator {
    * cd has a filter term of "/". If an argument to `cd` includes a "/" Fig will filter over all of the suggestions generated using the string AFTER the last "/"
    *
    */
-  getQueryTerm?: StringOrFunction<string, string>;
+  getQueryTerm?: StringOrFunction<string, string>
   /**
    * Custom function is a bit like script as a function, however, it gives you full control.
    *
@@ -505,10 +490,10 @@ export interface Generator {
     tokens: string[],
     executeShellCommand: ExecuteShellCommandFunction,
     shellContext?: {
-      currentWorkingDirectory: string;
-      sshPrefix: string;
+      currentWorkingDirectory: string
+      sshPrefix: string
     }
-  ) => Promise<Suggestion[]>;
+  ) => Promise<Suggestion[]>
   /**
    * For commands that take a long time to run, Fig gives you the option to cache their response. You can cache the response globally or just by the directory they were run in
    * You just need to specify a `ttl` (time to live) for how long the cache will last (this is a number)
@@ -518,7 +503,7 @@ export interface Generator {
    * The kubernetes spec makes use of this.
    *
    */
-  cache?: Cache;
+  cache?: Cache
 }
 
 export interface Cache {
@@ -528,9 +513,9 @@ export interface Cache {
    * @example
    * 3600
    */
-  ttl: number;
+  ttl: number
   /**
    * Whether the cache should be based on the directory the user was currently in or now.
    */
-  cacheByDirectory?: boolean;
+  cacheByDirectory?: boolean
 }
