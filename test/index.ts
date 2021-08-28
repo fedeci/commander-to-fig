@@ -21,8 +21,12 @@ function runFixtures() {
     const expected = path.resolve(fixturePath, "expected.ts");
     const output = path.resolve(fixturePath, "output.ts");
 
-    const cmd = `node -r ts-node/register ${command}`;
-    child.execSync(cmd);
+    try {
+      const cmd = `node -r ts-node/register ${command}`;
+      child.execSync(cmd);
+    } catch {
+      console.warn(chalk.bgBlackBright(` - Encountered error when trying to run ${fixture.name}` ))
+    }
 
     if (!fs.existsSync(expected) || process.env.OVERWRITE) {
       fs.copyFileSync(output, expected);

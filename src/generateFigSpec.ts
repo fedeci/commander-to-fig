@@ -16,67 +16,75 @@ function getTemplate(spec: Fig.Spec): string {
   `, { parser: 'typescript' })
 }
 
-function generateArg(arg: Argument & Record<string, any>): Fig.Arg {
-  const _arg: Fig.Arg = {
-    name: arg._name,
-  }
-  if (arg.description !== '') _arg.description = arg.description
-  if (!arg.required) _arg.isOptional = !arg.required
-  if (arg.variadic) _arg.isVariadic = arg.variadic
-  if (arg.defaultValue) _arg.default = arg.defaultValue
-  return _arg
+function generateArg(_arg: Argument & Record<string, any>): Fig.Arg {
+  const {
+    _name: name, description, required, variadic, defaultValue
+  } = _arg
+
+  const arg: Fig.Arg = { name }
+
+  if (description !== '') arg.description = description
+  if (!required) arg.isOptional = true
+  if (variadic) arg.isVariadic = true
+  if (defaultValue) arg.default = defaultValue
+  return arg
 }
 
-function generateOption(option: Option & Record<string, any>): Fig.Option {
-  const name = []
-  if (option.short) name.push(option.short)
-  if (option.long) name.push(option.long)
-  const _option: Fig.Option = {
-    name
-  }
-  if (option.description !== '') _option.description = option.description
+function generateOption(_option: Option & Record<string, any>): Fig.Option {
+  const { short, long, flags, description, mandatory, required, optional, variadic, argChoices, defaultValue } = _option
 
+  const name = []
+  if (short) name.push(short)
+  if (long) name.push(long)
+  const option: Fig.Option = { name }
+
+  if (description !== '') option.description = description
+  if (mandatory) option.isRequired = true
   // Option argument e.g. "-f, --flag <string>"
   // If required and optional are both false it does not have an argument
-  if (option.required || option.optional) {
-    const name = (option.flags.match(/.*[\[<](.*)[\]>]/) ?? [])[1] ?? ''
+  if (required || optional) {
+    const name = (flags.match(/.*[\[<](.*)[\]>]/) ?? [])[1] ?? ''
     const arg: Fig.Arg = {
       name: name.replace(/\./g, '')
     }
-    if (option.optional) arg.isOptional = option.optional
-    if (option.variadic) arg.isVariadic = option.variadic
-    if (option.argChoices) arg.suggestions = option.argChoices
-    if (option.defaultValue) arg.default = option.defaultValue
-    _option.args = arg
+    if (optional) arg.isOptional = true
+    if (variadic) arg.isVariadic = true
+    if (argChoices) arg.suggestions = argChoices
+    if (defaultValue) arg.default = defaultValue
+    option.args = arg
   }
-  return _option
+  return option
 }
 
-function generateCommand(command: Command & Record<string, any>): Fig.Subcommand {
-  let name = command._name
-  if (command._aliases.length) {
-    name = [name, ...command._aliases]
-  }
-  const _command: Fig.Subcommand = {
-    name,
-  }
+interface ExtendedCommand extends Command {
+  _name: string
+  _aliases: string[]
+  _args: Argument[]
+  options: Option[]
+}
+
+function generateCommand(_command: Command & Record<string, any>): Fig.Subcommand {
+  const { _name, _aliases, commands, _args, options } = _command as ExtendedCommand
+  
+  const name = _aliases.length > 1 ? [_name, ..._aliases] : _name
+  const command: Fig.Subcommand = { name }
   // Subcommands
-  if (command.commands.length) {
-    _command.subcommands = command.commands.map(generateCommand)
+  if (commands.length) {
+    command.subcommands = commands.map(generateCommand)
   }
   // Options
-  if (command.options.length) {
-    _command.options = (command.options as Option[]).map(generateOption)
+  if (options.length) {
+    command.options = options.map(generateOption)
   }
   // Args
-  if (command._args.length) {
-    _command.args = (command._args as Argument[]).map(generateArg)
+  if (_args.length) {
+    command.args = _args.map(generateArg)
   }
-  return _command
+  return command
 }
 
 export function generateFigSpec(
-  command: Command & Record<string, any>,
+  command: Command,
   filename: string,
   options?: Options
 ): Command {
