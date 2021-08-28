@@ -43,9 +43,10 @@ function generateOption(_option: Option & Record<string, any>): Fig.Option {
   // Option argument e.g. "-f, --flag <string>"
   // If required and optional are both false it does not have an argument
   if (required || optional) {
-    const name = (flags.match(/.*[\[<](.*)[\]>]/) ?? [])[1] ?? ''
+    const matches = flags.match(/.*[\[<](.*)[\]>]/)
+    
     const arg: Fig.Arg = {
-      name: name.replace(/\./g, '')
+      name: matches ? matches[1].replace(/\./g, '') : ''
     }
     if (optional) arg.isOptional = true
     if (variadic) arg.isVariadic = true

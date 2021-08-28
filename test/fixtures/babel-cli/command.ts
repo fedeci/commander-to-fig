@@ -150,4 +150,4 @@ program.option(
 program.version('7.15.0');
 program.usage("[options] <files ...>");
 
-generateFigSpec(program, 'output.ts', { cwd: "test/fixtures/babel"})
+generateFigSpec(program, 'output.ts', { cwd: "test/fixtures/babel-cli"})
