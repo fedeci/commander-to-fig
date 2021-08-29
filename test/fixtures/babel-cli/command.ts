@@ -18,16 +18,13 @@ program.option(
   'The project-root resolution mode. ' + "One of 'root' (the default), 'upward', or 'upward-optional'."
 )
 
-// Basic file input configuration.
 program.option('--source-type [script|module]', '')
 program.option('--no-babelrc', 'Whether or not to look up .babelrc and .babelignore files.')
 program.option('--ignore [list]', 'List of glob paths to **not** compile.')
 program.option('--only [list]', 'List of glob paths to **only** compile.')
 
-// Misc babel config.
 program.option('--no-highlight-code', 'Enable or disable ANSI syntax highlighting of code frames. (on by default)')
 
-// General output formatting.
 program.option('--no-comments', 'Write comments to generated output. (true by default)')
 program.option('--retain-lines', 'Retain line numbers. This will result in really ugly code.')
 program.option('--compact [true|false|auto]', 'Do not include superfluous whitespace characters and line terminators.')
@@ -35,13 +32,11 @@ program.option('--minified', 'Save as many bytes when printing. (false by defaul
 program.option('--auxiliary-comment-before [string]', 'Print a comment before any injected non-user code.')
 program.option('--auxiliary-comment-after [string]', 'Print a comment after any injected non-user code.')
 
-// General source map formatting.
 program.option('-s, --source-maps [true|false|inline|both]', '')
 program.option('--source-map-target [string]', 'Set `file` on returned source map.')
 program.option('--source-file-name [string]', 'Set `sources[0]` on returned source map.')
 program.option('--source-root [filename]', 'The root from which all sources are relative.')
 
-// "babel" command specific arguments that are not passed to @babel/core.
 program.option(
   '-x, --extensions [extensions]',
   'List of extensions to compile when a directory has been the input. [' + ['js', 'ts', 'jsx', 'tsx'].join() + ']'

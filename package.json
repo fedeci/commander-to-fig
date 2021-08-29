@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "ts-node test/index.ts",
-    "prettier": "prettier -w ."
+    "prettier": "prettier -w .",
+    "clean:test": "git clean -Xf test"
   },
   "repository": {
     "type": "git",

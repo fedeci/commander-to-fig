@@ -168,6 +168,7 @@ const completionSpec: Fig.Spec = {
       args: { name: "string", isOptional: true },
     },
     { name: ["-V", "--version"], description: "output the version number" },
+    { name: ["-h", "--help"], description: "display help for command" },
   ],
 };
 
