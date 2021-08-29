@@ -26,7 +26,7 @@ function generateArg(_arg: Argument & Record<string, any>): Fig.Arg {
 
   const arg: Fig.Arg = { name }
 
-  if (description !== '') arg.description = description
+  if (description) arg.description = description
   if (!required) arg.isOptional = true
   if (variadic) arg.isVariadic = true
   if (defaultValue) arg.default = defaultValue
@@ -41,7 +41,7 @@ function generateOption(_option: Option & Record<string, any>): Fig.Option {
   if (long) name.push(long)
   const option: Fig.Option = { name }
 
-  if (description !== '') option.description = description
+  if (description) option.description = description
   if (mandatory) option.isRequired = true
   // Option argument e.g. "-f, --flag <string>"
   // If required and optional are both false it does not have an argument
@@ -62,6 +62,7 @@ function generateOption(_option: Option & Record<string, any>): Fig.Option {
 
 interface ExtendedCommand extends Command {
   _name: string
+  _description: string
   _aliases: string[]
   _args: Argument[]
   options: Option[]
@@ -95,11 +96,13 @@ function helpOption({ _helpDescription, _helpShortFlag, _helpLongFlag }: Extende
 }
 
 function generateCommand(_command: Command & Record<string, any>): Fig.Subcommand {
-  const { _name, _aliases, commands, _args, options, _addImplicitHelpCommandL, _hasHelpOption } =
+  const { _name, _description, _aliases, commands, _args, options, _addImplicitHelpCommandL, _hasHelpOption } =
     _command as ExtendedCommand
 
   const name = _aliases.length > 1 ? [_name, ..._aliases] : _name
-  const command: Fig.Subcommand = { name, options: [] }
+  const command: Fig.Subcommand = { name }
+
+  if (_description) command.description = _description
   // Subcommands
   if (commands.length) {
     command.subcommands = commands.map(generateCommand)
@@ -108,11 +111,12 @@ function generateCommand(_command: Command & Record<string, any>): Fig.Subcomman
     }
   }
   // Options
+  command.options = []
   if (options.length) {
     command.options = options.map(generateOption)
   }
   if (_hasHelpOption) {
-    command.options!.push(helpOption(_command as ExtendedCommand))
+    command.options.push(helpOption(_command as ExtendedCommand))
   }
   // Args
   if (_args.length) {
