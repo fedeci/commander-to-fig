@@ -65,20 +65,54 @@ interface ExtendedCommand extends Command {
   _aliases: string[]
   _args: Argument[]
   options: Option[]
+  _helpDescription: string
+  _helpShortFlag: string
+  _helpLongFlag: string
+  _addImplicitHelpCommandL?: boolean // Deliberately undefined, not decided whether true or false
+  _helpCommandName: string
+  _helpCommandnameAndArgs: string
+  _helpCommandDescription: string
+  _hasHelpOption: boolean
+}
+
+function helpSubcommand({
+  _helpCommandName, // 'help'
+  _helpCommandDescription,
+  _helpCommandnameAndArgs, // 'help [cmd]'
+}: ExtendedCommand): Fig.Option {
+  return {
+    name: _helpCommandName,
+    description: _helpCommandDescription,
+    args: {
+      name: _helpCommandnameAndArgs.split(' ')[1].slice(1, -1),
+      isOptional: true,
+    },
+  }
+}
+
+function helpOption({ _helpDescription, _helpShortFlag, _helpLongFlag }: ExtendedCommand): Fig.Option {
+  return { name: [_helpShortFlag, _helpLongFlag], description: _helpDescription }
 }
 
 function generateCommand(_command: Command & Record<string, any>): Fig.Subcommand {
-  const { _name, _aliases, commands, _args, options } = _command as ExtendedCommand
+  const { _name, _aliases, commands, _args, options, _addImplicitHelpCommandL, _hasHelpOption } =
+    _command as ExtendedCommand
 
   const name = _aliases.length > 1 ? [_name, ..._aliases] : _name
-  const command: Fig.Subcommand = { name }
+  const command: Fig.Subcommand = { name, options: [] }
   // Subcommands
   if (commands.length) {
     command.subcommands = commands.map(generateCommand)
+    if (_addImplicitHelpCommandL !== false) {
+      command.subcommands.push(helpSubcommand(_command as ExtendedCommand))
+    }
   }
   // Options
   if (options.length) {
     command.options = options.map(generateOption)
+  }
+  if (_hasHelpOption) {
+    command.options!.push(helpOption(_command as ExtendedCommand))
   }
   // Args
   if (_args.length) {
