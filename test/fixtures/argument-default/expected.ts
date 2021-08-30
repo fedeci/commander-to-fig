@@ -14,7 +14,7 @@ const completionSpec: Fig.Spec = {
       name: "timeout",
       description: "timeout in seconds",
       isOptional: true,
-      default: 60,
+      default: "60",
     },
   ],
 };

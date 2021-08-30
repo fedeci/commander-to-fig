@@ -8,8 +8,8 @@ const completionSpec: Fig.Spec = {
       description: "specify the color",
       args: { name: "type", default: "blue" },
     },
-    { name: ["-n", "--number"], args: { name: "type", default: 1 } },
-    { name: ["-a", "--arr"], args: { name: "type", default: [1, 2, 3] } },
+    { name: ["-n", "--number"], args: { name: "type", default: "1" } },
+    { name: ["-a", "--arr"], args: { name: "type", default: "1,2,3" } },
     {
       name: ["-h", "--help"],
       description: "display help for command",

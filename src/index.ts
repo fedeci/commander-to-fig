@@ -8,6 +8,12 @@ export interface Options {
   cwd?: string
 }
 
+function convertDefaultValue(v: any) {
+  if (typeof v === 'string') return v
+  if (Array.isArray(v)) return v.join(',')
+  return String(v)
+}
+
 function getTemplate(spec: Fig.Spec): string {
   return prettier.format(
     `
@@ -29,7 +35,7 @@ function generateArg(_arg: Argument & Record<string, any>): Fig.Arg {
   if (description) arg.description = description
   if (!required) arg.isOptional = true
   if (variadic) arg.isVariadic = true
-  if (defaultValue) arg.default = defaultValue
+  if (defaultValue) arg.default = convertDefaultValue(defaultValue)
   return arg
 }
 
@@ -54,7 +60,7 @@ function generateOption(_option: Option & Record<string, any>): Fig.Option {
     if (optional) arg.isOptional = true
     if (variadic) arg.isVariadic = true
     if (argChoices) arg.suggestions = argChoices
-    if (defaultValue) arg.default = defaultValue
+    if (defaultValue) arg.default = convertDefaultValue(defaultValue)
     option.args = arg
   }
   return option
