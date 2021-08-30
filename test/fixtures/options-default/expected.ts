@@ -10,7 +10,11 @@ const completionSpec: Fig.Spec = {
     },
     { name: ["-n", "--number"], args: { name: "type", default: 1 } },
     { name: ["-a", "--arr"], args: { name: "type", default: [1, 2, 3] } },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

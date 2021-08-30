@@ -13,7 +13,11 @@ const completionSpec: Fig.Spec = {
       description: "specify letters",
       args: { name: "value", isOptional: true, isVariadic: true },
     },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

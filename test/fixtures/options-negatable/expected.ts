@@ -10,7 +10,11 @@ const completionSpec: Fig.Spec = {
       args: { name: "flavour", default: "mozzarella" },
     },
     { name: ["--no-cheese"], description: "plain with no cheese" },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

@@ -6,7 +6,11 @@ const completionSpec: Fig.Spec = {
   options: [
     { name: ["-V", "--version"], description: "output the version number" },
     { name: ["-f", "--foo"], description: "enable some foo" },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

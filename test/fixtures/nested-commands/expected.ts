@@ -9,23 +9,36 @@ const completionSpec: Fig.Spec = {
         {
           name: "tea",
           options: [
-            { name: ["-h", "--help"], description: "display help for command" },
+            {
+              name: ["-h", "--help"],
+              description: "display help for command",
+              priority: 49,
+            },
           ],
         },
         {
           name: "coffee",
           options: [
-            { name: ["-h", "--help"], description: "display help for command" },
+            {
+              name: ["-h", "--help"],
+              description: "display help for command",
+              priority: 49,
+            },
           ],
         },
         {
           name: "help",
           description: "display help for command",
+          priority: 49,
           args: { name: "command", isOptional: true },
         },
       ],
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
     },
     {
@@ -34,33 +47,51 @@ const completionSpec: Fig.Spec = {
         {
           name: "jug",
           options: [
-            { name: ["-h", "--help"], description: "display help for command" },
+            {
+              name: ["-h", "--help"],
+              description: "display help for command",
+              priority: 49,
+            },
           ],
         },
         {
           name: "pot",
           options: [
-            { name: ["-h", "--help"], description: "display help for command" },
+            {
+              name: ["-h", "--help"],
+              description: "display help for command",
+              priority: 49,
+            },
           ],
         },
         {
           name: "help",
           description: "display help for command",
+          priority: 49,
           args: { name: "command", isOptional: true },
         },
       ],
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
     },
     {
       name: "help",
       description: "display help for command",
+      priority: 49,
       args: { name: "command", isOptional: true },
     },
   ],
   options: [
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

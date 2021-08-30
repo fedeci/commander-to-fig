@@ -5,7 +5,11 @@ const completionSpec: Fig.Spec = {
   description: "example program for argument",
   options: [
     { name: ["-V", "--version"], description: "output the version number" },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
   args: [
     { name: "username", description: "user to login" },

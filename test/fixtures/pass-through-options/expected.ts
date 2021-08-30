@@ -4,7 +4,11 @@ const completionSpec: Fig.Spec = {
   name: "",
   options: [
     { name: ["-d", "--dry-run"] },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
   args: [
     { name: "utility" },

@@ -7,14 +7,22 @@ const completionSpec: Fig.Spec = {
       name: "build",
       description: "build web site for deployment",
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
     },
     {
       name: "deploy",
       description: "deploy web site to production",
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
     },
     {
@@ -26,17 +34,26 @@ const completionSpec: Fig.Spec = {
           description: "web port",
           args: { name: "port_number" },
         },
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
     },
     {
       name: "help",
       description: "display help for command",
+      priority: 49,
       args: { name: "command", isOptional: true },
     },
   ],
   options: [
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

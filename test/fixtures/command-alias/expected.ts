@@ -8,7 +8,11 @@ const completionSpec: Fig.Spec = {
       name: ["install", "i"],
       description: "install one or more packages",
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
       args: [{ name: "name", isOptional: true }],
     },
@@ -16,19 +20,28 @@ const completionSpec: Fig.Spec = {
       name: ["search", "s"],
       description: "search with optional query",
       options: [
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
       args: [{ name: "query", isOptional: true }],
     },
     {
       name: "help",
       description: "display help for command",
+      priority: 49,
       args: { name: "command", isOptional: true },
     },
   ],
   options: [
     { name: ["-V", "--version"], description: "output the version number" },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

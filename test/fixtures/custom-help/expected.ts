@@ -7,12 +7,17 @@ const completionSpec: Fig.Spec = {
       name: "child",
       options: [
         { name: ["--gender"], description: "specific gender of child" },
-        { name: ["-c", "--HELP"], description: "custom help message" },
+        {
+          name: ["-c", "--HELP"],
+          description: "custom help message",
+          priority: 49,
+        },
       ],
     },
     {
       name: "help",
       description: "display help for command",
+      priority: 49,
       args: { name: "command", isOptional: true },
     },
   ],
@@ -23,7 +28,11 @@ const completionSpec: Fig.Spec = {
       description: "specify template engine (jade|ejs) [jade]",
       args: { name: "engine", default: "jade" },
     },
-    { name: ["-c", "--HELP"], description: "custom help message" },
+    {
+      name: ["-c", "--HELP"],
+      description: "custom help message",
+      priority: 49,
+    },
   ],
 };
 

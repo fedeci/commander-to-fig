@@ -8,7 +8,11 @@ const completionSpec: Fig.Spec = {
       description: "drink cup size",
       args: { name: "size", suggestions: ["small", "medium", "large"] },
     },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

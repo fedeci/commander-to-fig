@@ -84,6 +84,7 @@ function helpSubcommand({
   return {
     name: _helpCommandName,
     description: _helpCommandDescription,
+    priority: 49,
     args: {
       name: _helpCommandnameAndArgs.split(' ')[1].slice(1, -1),
       isOptional: true,
@@ -92,7 +93,7 @@ function helpSubcommand({
 }
 
 function helpOption({ _helpDescription, _helpShortFlag, _helpLongFlag }: ExtendedCommand): Fig.Option {
-  return { name: [_helpShortFlag, _helpLongFlag], description: _helpDescription }
+  return { name: [_helpShortFlag, _helpLongFlag], description: _helpDescription, priority: 49 }
 }
 
 function generateCommand(_command: Command & Record<string, any>): Fig.Subcommand {

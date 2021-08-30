@@ -10,7 +10,11 @@ const completionSpec: Fig.Spec = {
       description: "specify template engine (jade|ejs) [jade]",
       args: { name: "engine", default: "jade" },
     },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

@@ -3,7 +3,11 @@
 const completionSpec: Fig.Spec = {
   name: "",
   options: [
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
   args: [{ name: "drink-size", description: "drink cup size" }],
 };

@@ -11,19 +11,28 @@ const completionSpec: Fig.Spec = {
           description: "port number",
           args: { name: "number", default: "80" },
         },
-        { name: ["-h", "--help"], description: "display help for command" },
+        {
+          name: ["-h", "--help"],
+          description: "display help for command",
+          priority: 49,
+        },
       ],
       args: [{ name: "file" }],
     },
     {
       name: "help",
       description: "display help for command",
+      priority: 49,
       args: { name: "command", isOptional: true },
     },
   ],
   options: [
     { name: ["-p", "--progress"] },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 

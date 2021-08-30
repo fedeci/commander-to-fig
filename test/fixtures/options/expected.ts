@@ -28,7 +28,11 @@ const completionSpec: Fig.Spec = {
       description: "comma separated list",
       args: { name: "items" },
     },
-    { name: ["-h", "--help"], description: "display help for command" },
+    {
+      name: ["-h", "--help"],
+      description: "display help for command",
+      priority: 49,
+    },
   ],
 };
 
