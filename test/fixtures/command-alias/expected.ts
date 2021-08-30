@@ -5,7 +5,7 @@ const completionSpec: Fig.Spec = {
   description: "Fake package manager",
   subcommands: [
     {
-      name: "install",
+      name: ["install", "i"],
       description: "install one or more packages",
       options: [
         { name: ["-h", "--help"], description: "display help for command" },
@@ -13,7 +13,7 @@ const completionSpec: Fig.Spec = {
       args: [{ name: "name", isOptional: true }],
     },
     {
-      name: "search",
+      name: ["search", "s"],
       description: "search with optional query",
       options: [
         { name: ["-h", "--help"], description: "display help for command" },

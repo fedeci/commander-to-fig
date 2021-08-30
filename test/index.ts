@@ -45,7 +45,7 @@ function runFixtures() {
 
     const outputFile = fs.readFileSync(output)
     const expectedFile = fs.readFileSync(expected)
-    
+
     const successful = outputFile.equals(expectedFile)
     if (!successful) {
       hadErrors = true
