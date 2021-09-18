@@ -1,5 +1,4 @@
 import type { Argument, Command, Option } from 'commander'
-import * as Fig from './fig'
 import { writeFileSync } from 'fs'
 import path from 'path'
 import prettier from 'prettier'
