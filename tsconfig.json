@@ -9,10 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "declaration": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@withfig/autocomplete-tools/@types"
-    ]
+    "types": ["@withfig/autocomplete-types", "node"]
   },
   "exclude": ["test/", "node_modules/", "lib/"]
 }
