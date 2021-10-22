@@ -1,4 +1,6 @@
-# Commander-to-fig
+# ⚠️ NOTE: this integration is now `@withfig/commander` and has moved into the the [autocomplete-tools monorepo](https://github.com/withfig/autocomplete-tools).
+
+## Commander-to-fig
 
 [![CI](https://github.com/fedeci/commander-to-fig/actions/workflows/main.yml/badge.svg)](https://github.com/fedeci/commander-to-fig/actions/workflows/main.yml)
 
@@ -6,7 +8,7 @@ A tool to speed up the workflow of converting [Commander](https://github.com/tj/
 
 ---
 
-## Docs
+### Docs
 
 ```ts
 generateFigSpec(command, filename[, options]): void
@@ -17,13 +19,13 @@ generateFigSpec(command, filename[, options]): void
 - `options`: an object containing the following optional properties:
   - `cwd`: specify the working directory in which the file will be saved. It defaults to `process.cwd()`
 
-## Usage
+### Usage
 
 Using this library is as simple as importing a function and calling it.
 
 ```js
 import { program } from 'commander'
-import { generateFigSpec } from '@withfig/commander-to-fig'
+import { generateFigSpec } from '@withfig/commander'
 
 program
   .name('babel')
@@ -34,7 +36,7 @@ program
 generateFigSpec(program, 'babel-spec.ts')
 ```
 
-### Specify the working directory
+#### Specify the working directory
 
 For example you may want to generate the file in an home directory subfolder for testing purpose.
 
